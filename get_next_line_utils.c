@@ -6,7 +6,7 @@
 /*   By: ssaensuk <ssaensuk@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 15:22:38 by ssaensuk          #+#    #+#             */
-/*   Updated: 2025/11/02 23:54:13 by ssaensuk         ###   ########.fr       */
+/*   Updated: 2025/11/23 16:47:51 by ssaensuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	*ft_strchr(const char *s, int c)
 	}
 	if (*s == (char)c)
 		return ((char *)s);
-	return (0);
+	return (NULL);
 }
 
 char	*ft_strjoin(char const *s1, char const *s2)
@@ -43,7 +43,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	size_t	i;
 	size_t	j;
 
-	if (s1 == NULL || s2 == NULL)
+	if (!s1 || !s2)
 		return (NULL);
 	len1 = ft_strlen(s1);
 	len2 = ft_strlen(s2);
@@ -84,14 +84,15 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	size_t	i;
 	char	*substr;
 
-	if (s == NULL)
+	if (!s)
 		return (NULL);
 	if (start > ft_strlen(s))
 		return (ft_strdup(""));
-	if (len > (ft_strlen(s) - start))
-		len = ft_strlen(s) - start;
-	substr = (char *)malloc(sizeof(char) * (len + 1));
-	if (substr == NULL)
+	if (len >= ft_strlen(s))
+		substr = (char *)malloc(sizeof(char) * (ft_strlen(s) + 1));
+	else
+		substr = (char *)malloc(sizeof(char) * (len + 1));
+	if (!substr)
 		return (NULL);
 	i = 0;
 	while (s[start + i] != '\0' && i < len)
